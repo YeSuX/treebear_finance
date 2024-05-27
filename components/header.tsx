@@ -2,6 +2,7 @@ import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs"
 import HeaderLogo from "./header-logo"
 import Navigation from "./navigation"
 import { UpdateIcon } from "@radix-ui/react-icons"
+import WelcomeMsg from "./welcome-msg"
 
 const Header = () => {
   return (
@@ -19,6 +20,7 @@ const Header = () => {
             <UpdateIcon className=" animate-spin text-neutral-500" />
           </ClerkLoading>
         </div>
+        <WelcomeMsg/>
       </div>
     </header>
   )
