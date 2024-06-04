@@ -9,9 +9,6 @@ const DashboardLayout = ({ children }: IProps) => {
     return (
         <>
             <Header />
-            <div>
-                123
-            </div>
             <div className=" px-3 lg:px-14">{children}</div>
         </>
     )
