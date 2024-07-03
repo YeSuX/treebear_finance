@@ -8,11 +8,17 @@ import { columns } from "./columns"
 import { DataTable } from "@/components/data-table"
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete"
 
 const AccountsPage = () => {
     const newAccount = useNewAccount()
+    const deleteAccounts = useBulkDeleteAccounts();
     const accountsQuery = useGetAccounts();
     const accounts = accountsQuery.data || []
+
+    const isDisabled =
+        accountsQuery.isLoading ||
+        deleteAccounts.isPending
 
     if (accountsQuery.isLoading) {
         return (
@@ -23,7 +29,7 @@ const AccountsPage = () => {
                     </CardHeader>
                     <CardContent>
                         <div className=" h-[300px] w-full flex items-center justify-center">
-                            <ReloadIcon className=" size-6 text-slate-300 animate-spin"/>
+                            <ReloadIcon className=" size-6 text-slate-300 animate-spin" />
                         </div>
                     </CardContent>
                 </Card>
@@ -44,7 +50,10 @@ const AccountsPage = () => {
                     </Button>
                 </CardHeader>
                 <CardContent>
-                    <DataTable filterKey='name' columns={columns} data={accounts} onDelete={() => { }} disabled={false} />
+                    <DataTable filterKey='name' columns={columns} data={accounts} onDelete={(row) => {
+                        const ids = row.map((r) => r.original.id)
+                        deleteAccounts.mutate({ ids })
+                    }} disabled={isDisabled} />
                 </CardContent>
             </Card>
         </div>

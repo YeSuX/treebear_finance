@@ -30,8 +30,8 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[],
     filterKey: string,
-    onDelete: (rows: Row<TData[]>) => void
-    disabled:boolean
+    onDelete: (rows: Row<TData>[]) => void
+    disabled: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -75,7 +75,10 @@ export function DataTable<TData, TValue>({
                 />
                 {
                     table.getFilteredRowModel().rows.length > 0 && (
-                        <Button disabled={disabled} size={'sm'} variant={'outline'} className=" ml-auto font-normal text-sm">
+                        <Button onClick={() => {
+                            onDelete(table.getFilteredSelectedRowModel().rows)
+                            table.resetRowSelection()
+                        }} disabled={disabled} size={'sm'} variant={'outline'} className=" ml-auto font-normal text-sm">
                             <TrashIcon className=" size-4 mr-2" />
                             Delete ({table.getFilteredSelectedRowModel().rows.length})
                         </Button>
