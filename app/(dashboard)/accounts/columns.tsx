@@ -6,6 +6,7 @@ import { client } from "@/lib/hono"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { InferRequestType } from "hono"
+import { Actions } from "./actions"
 
 // This type is used to define the shape of our data.
 // You can use a Zod sch ema here if you want.
@@ -49,4 +50,8 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
 
   },
+  {
+    id: 'actions',
+    cell: ({ row }) => <Actions id={row.original.id} />
+  }
 ]
